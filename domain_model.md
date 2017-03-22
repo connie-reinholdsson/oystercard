@@ -117,3 +117,21 @@ I want to **see to all my previous trips**
 2. Card => Record the journeys
 2. Card => Store the journeys
 3. Card => Displaying the journeys
+
+##User Story 9
+In order to know how far I have travelled
+As a customer
+I want to know what zone a station is in
+### Nouns
+In order to know how far I have travelled
+As a **customer**
+I want to know what **zone** a station is in
+### Verbs
+In order to know how far I have travelled
+As a customer
+I want to **know what zone** a station is in
+### Objects
+1. User (customer)
+2. Station
+### Messages
+2. Station => To display name and zone
