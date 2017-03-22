@@ -134,4 +134,27 @@ I want to **know what zone** a station is in
 1. User (customer)
 2. Station
 ### Messages
-2. Station => To display name and zone
+1. Station => To display name and zone
+
+##User Story 10
+In order to be charged correctly
+As a customer
+I need a penalty charge deducted if I fail to touch in or out
+### Nouns
+In order to be charged correctly
+As a **customer**
+I need a **penalty charge** deducted if I fail to touch in or out
+### Verbs
+In order to be charged correctly
+As a customer
+I need a penalty charge **deducted** if I fail to touch in or out
+### Objects
+1. User (customer)
+2. Card
+3. Station
+4. Journey
+### Messages
+1. User (customer)
+2. Card => top_up(amount), touch_in(entry_station), touch_out(exit_station), deduct(amount), calculate_fare
+3. Station => Hold name and zone information (in instance variables)
+4. Journey => star_journey(entry_station), end_journey(exit_station), complete?

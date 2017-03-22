@@ -9,9 +9,6 @@ describe Oystercard do
     it 'has balance of zero' do
       expect(oystercard.balance).to eq(0)
     end
-    it "checks there is an instance variable journey_history" do
-      expect(oystercard.journey_history).to eq []
-    end
   end
 
   describe '#top_up' do
@@ -43,12 +40,6 @@ describe Oystercard do
       expect(oystercard.entry_station).to eq entry_station
     end
 
-    it "checks that station gets stored in journey history" do
-      oystercard.top_up(5)
-      oystercard.touch_in(entry_station)
-      expect(oystercard.journey_history).to eq [{entry_station: entry_station }]
-    end
-
     it 'changes in_journey? to true' do
       oystercard.top_up(5)
       oystercard.touch_in(entry_station)
@@ -58,6 +49,18 @@ describe Oystercard do
     it "raises error if below minimum balance" do
       expect{oystercard.touch_in(entry_station)}.to raise_error "Insufficient funds: Please top-up."
     end
+
+    it 'passes the station to journey class' do
+      oystercard.top_up(10)
+      expect(oystercard).to receive_message_chain(:journey, :start_journey)
+      oystercard.touch_in(entry_station)
+    end
+
+    # it 'charges £6 if passanger did not touch out on last journey' do
+    #   oystercard.top_up(10)
+    #   oystercard.touch_in(entry_station)
+    #   expect{oystercard.touch_in(entry_station)}.to change {oystercard.balance}.by -6
+    # end
   end
 
   describe '#touch_out' do
@@ -68,17 +71,16 @@ describe Oystercard do
       expect(oystercard).not_to be_in_journey
     end
 
-    it "checks that station gets stored in journey history" do
-      oystercard.top_up(5)
-      oystercard.touch_in(entry_station)
-      oystercard.touch_out(exit_station)
-      expect(oystercard.journey_history).to eq [{entry_station: entry_station, exit_station: exit_station}]
-    end
-
     it "deducts fare" do
       oystercard.top_up(Oystercard::MINIMUM_BALANCE)
       oystercard.touch_in(entry_station)
       expect{oystercard.touch_out(exit_station)}.to change {oystercard.balance}.by -Oystercard::MINIMUM_CHARGE
+    end
+
+    it 'passes the exit staion to journey class' do
+      oystercard.top_up(10)
+      expect(oystercard).to receive_message_chain(:journey, :end_journey)
+      oystercard.touch_out(exit_station)
     end
   end
 end
