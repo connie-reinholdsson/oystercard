@@ -3,6 +3,9 @@ require 'journey'
 describe Journey do
 subject(:journey) { described_class.new }
 let (:station) { double(:station) }
+let(:card) { double(:card)}
+
+before {allow(card).to receive(:in_journey?)}
 
   describe "#Initialize" do
     it 'initializes with an empty array' do
@@ -12,14 +15,14 @@ let (:station) { double(:station) }
 
   describe "#start_journey" do
   it "records the entry station" do
-    journey.start_journey(station)
+    journey.start_journey(card, station)
     expect(journey.current_journey).to eq [station]
     end
   end
 
   describe "#end_journey" do
     it "records the exit station" do
-      journey.start_journey(station)
+      journey.start_journey(card, station)
       journey.end_journey(station)
       expect(journey.current_journey).to eq [station, station]
     end
@@ -27,7 +30,7 @@ let (:station) { double(:station) }
 
   describe '#complete?' do
     it 'checks whether the passenger has touched out on exit' do
-      journey.start_journey(station)
+      journey.start_journey(card, station)
       journey.end_journey(station)
       expect(journey.complete?).to eq true
     end
@@ -36,6 +39,7 @@ let (:station) { double(:station) }
   describe '#penalty_charge' do
     it 'subtracts money from the balance' do
       card = double(:card)
+      allow(card).to receive(:in_journey?) {true}
       expect(card).to receive(:deduct).with(described_class::PENALTY_CHARGE)
       journey.penalty_charge(card)
     end

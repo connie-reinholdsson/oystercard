@@ -9,7 +9,8 @@ class Journey
     @current_journey = []
   end
 
-  def start_journey(entry_station)
+  def start_journey(card, entry_station)
+    penalty_charge(card)
     current_journey.push(entry_station)
   end
 
@@ -22,7 +23,7 @@ class Journey
   end
 
   def penalty_charge(card)
-    card.deduct(PENALTY_CHARGE)
+    card.deduct(PENALTY_CHARGE) if card.in_journey?
   end
 
 end

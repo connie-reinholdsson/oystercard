@@ -56,11 +56,6 @@ describe Oystercard do
       oystercard.touch_in(entry_station)
     end
 
-    # it 'charges £6 if passanger did not touch out on last journey' do
-    #   oystercard.top_up(10)
-    #   oystercard.touch_in(entry_station)
-    #   expect{oystercard.touch_in(entry_station)}.to change {oystercard.balance}.by -6
-    # end
   end
 
   describe '#touch_out' do
