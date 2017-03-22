@@ -5,10 +5,11 @@ class Oystercard
   MINIMUM_BALANCE = 1
   MINIMUM_CHARGE = 1
 
-  attr_reader :balance, :in_journey, :entry_station
+  attr_reader :balance, :in_journey, :entry_station, :journey_history
 
   def initialize
     @balance = 0
+    @journey_history = []
   end
 
   def top_up(amount)
@@ -17,17 +18,20 @@ class Oystercard
   end
 
   def in_journey?
-    !!entry_station # If entry_station not nil, return true else false
+    entry_station # Is entry_station true, i.e. does it exist? Reason we do this, is to ensure we cannot touch_out
+    #unless we've touched_in.
   end
 
   def touch_in(station)
     fail "Insufficient funds: Please top-up." if insufficient_funds?
     @entry_station = station
+    journey_history.push({entry_station: station})
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MINIMUM_CHARGE)
     @entry_station = nil
+    journey_history[-1][:exit_station] = station
   end
 
   private

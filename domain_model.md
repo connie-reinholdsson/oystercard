@@ -97,3 +97,23 @@ I need to **know where I've travelled from**
 ### Messages
 2. Card => Take station during touch_in
 2. Card => Keep record of journeys
+
+##User Story 8
+In order to know where I have been
+As a customer
+I want to see to all my previous trips
+### Nouns
+In order to know where I have been
+As a **customer**
+I want to see to all my **previous trips**
+### Verbs
+In order to know where I have been
+As a customer
+I want to **see to all my previous trips**
+### Objects
+1. User (customer)
+2. Card
+### Messages
+2. Card => Record the journeys
+2. Card => Store the journeys
+3. Card => Displaying the journeys
